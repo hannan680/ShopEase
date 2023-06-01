@@ -20,7 +20,7 @@ const stripe = require("stripe")(
 const app = express();
 
 app.post(
-  "stripe/webhook",
+  "/stripe/webhook",
   express.raw({ type: "application/json" }),
   async (request, response) => {
     const sig = request.headers["stripe-signature"];
