@@ -8,7 +8,7 @@ const catogoriesRoutes = require("./routes/catogories.routes");
 const reviewsRoutes = require("./routes/reviews.routes");
 const cartsRoutes = require("./routes/carts.routes");
 const favoritesRoutes = require("./routes/favorites.routes");
-const shopRoutes = require("./routes/shop.routes");
+const shopRoutes = require("./routes/shop.routes"); 
 const orderRoutes = require("./routes/orders.routes");
 const userRoutes = require("./routes/user.routes");
 
