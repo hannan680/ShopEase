@@ -8,7 +8,7 @@ const catogoriesRoutes = require("./routes/catogories.routes");
 const reviewsRoutes = require("./routes/reviews.routes");
 const cartsRoutes = require("./routes/carts.routes");
 const favoritesRoutes = require("./routes/favorites.routes");
-const shopRoutes = require("./routes/shop.routes"); 
+const shopRoutes = require("./routes/shop.routes");
 const orderRoutes = require("./routes/orders.routes");
 const userRoutes = require("./routes/user.routes");
 
@@ -18,23 +18,30 @@ const stripe = require("stripe")(
   "sk_test_51NCDBnFLDQjuRWyyAX8r0gTPwhDfTaflddqfpeyIEkOCuPdQABENE254snHMOVp3BObbHrme2MFmlJyV01rYZl5O00323z8xqB"
 );
 const app = express();
+
 const endpointSecret = "we_1NEFxfFLDQjuRWyy1RfLPEiG";
 
+app.use(
+  express.json({
+    verify: (req, res, buf) => {
+      req.rawBody = buf;
+    },
+  })
+);
+initDb();
+app.use(cors({ origin: true }));
 app.post(
   "/stripe/webhook",
   express.raw({ type: "application/json" }),
-  async (request, response) => {
-    const sig = request.headers["stripe-signature"];
+  async (req, res) => {
+    const sig = req.headers["stripe-signature"];
 
     let event;
 
     try {
-      console.log("trigeriing");
-      event = stripe.webhooks.constructEvent(request.body, sig, endpointSecret);
-            console.log("trigeriing22222");
-
+      event = stripe.webhooks.constructEvent(req.rawBody, sig, endpointSecret);
     } catch (err) {
-      response.status(400).send(`Webhook Error: ${err.message}`);
+      res.status(400).send(`Webhook Error: ${err.message}`);
       return;
     }
     // Handle the event
@@ -57,17 +64,11 @@ app.post(
     }
 
     // Return a 200 response to acknowledge receipt of the event
-    response.send();
+    res.send();
   }
 );
 
-app.use(express.json());
-initDb();
-app.use(cors({ origin: true }));
-
 const url = "/api/v1";
-
-
 
 app.use(express.static("public"));
 app.use(`${url}/auth`, authRoutes);
