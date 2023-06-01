@@ -19,7 +19,7 @@ const stripe = require("stripe")(
 );
 const app = express();
 
-const endpointSecret = "we_1NEFxfFLDQjuRWyy1RfLPEiG";
+const endpointSecret = "whsec_QAfxAzRTnvwuX8mL35Jqkpp4mcfUAAXh";
 
 app.use(
   express.json({
@@ -41,6 +41,7 @@ app.post(
 
     try {
           console.log("2222")
+        console.log(req.rawBody)
 
       event = stripe.webhooks.constructEvent(req.rawBody, sig, endpointSecret);
                 console.log("333")
