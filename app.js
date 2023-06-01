@@ -54,6 +54,7 @@ app.post(
     switch (event.type) {
       case "payment_intent.succeeded":
         console.log(event.data.object);
+        console.log(intent.metadata +"................................................................");
         const intent = event.data.object;
         const order = JSON.parse(intent.metadata);
         const { products, totalPrice, shippingAddress, customer } = order;
