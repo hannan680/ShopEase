@@ -29,7 +29,10 @@ app.post(
     let event;
 
     try {
+      console.log("trigeriing");
       event = stripe.webhooks.constructEvent(request.body, sig, endpointSecret);
+            console.log("trigeriing22222");
+
     } catch (err) {
       response.status(400).send(`Webhook Error: ${err.message}`);
       return;
