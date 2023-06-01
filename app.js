@@ -18,6 +18,7 @@ const stripe = require("stripe")(
   "sk_test_51NCDBnFLDQjuRWyyAX8r0gTPwhDfTaflddqfpeyIEkOCuPdQABENE254snHMOVp3BObbHrme2MFmlJyV01rYZl5O00323z8xqB"
 );
 const app = express();
+const endpointSecret = "we_1NEFxfFLDQjuRWyy1RfLPEiG";
 
 app.post(
   "/stripe/webhook",
@@ -63,8 +64,7 @@ app.use(cors({ origin: true }));
 
 const url = "/api/v1";
 
-const endpointSecret =
-  "whsec_14b96451e31453210d26f48d9f521f50d54d566c462811fd72f8100eefc3c995";
+
 
 app.use(express.static("public"));
 app.use(`${url}/auth`, authRoutes);
